@@ -39,6 +39,7 @@ def edit(request, vic):
     }
     return render(request, 'recordtracker/edit.html', content)
 
+
 def update(request, vic):
     vehicle = VehicleStats.objects.get(id = vic)
     vehicle.make = request.POST['make']
@@ -51,23 +52,47 @@ def update(request, vic):
     vehicle.notes = request.POST['notes']
     return redirect('/vehicles/'+str(vehicle.id))
 
-def fuel():
+
+def fuel(request, vic):
+    vehicle = VehicleStats.objects.get(id = vic)
+    fuel = VehicleFueling.objects.get(VehicleStats = vehicle)
+    content = {
+        'fuel': fuel
+    }
     return redirect('/')
+
+
 def add_fuel():
     return redirect('/')
+
+
 def edit_fuel():
     return redirect('/')
+
+
 def update_fuel():
     return redirect('/')
+
+
 def delete_fuel():
     return redirect('/')
+
+
 def maint():
     return redirect('/')
+
+
 def add_maint():
     return redirect('/')
+
+
 def edit_maint():
     return redirect('/')
+
+
 def update_maint():
     return redirect('/')
+
+
 def delete_maint():
     return redirect('/')

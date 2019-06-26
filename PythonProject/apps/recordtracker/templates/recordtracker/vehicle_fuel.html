@@ -40,13 +40,16 @@
                     {% for entry in fuel %}
                         <tr>
                             <td><a href="/vehicles/{{vehicle.id}}">{{entry.model}}</a></td>
-                            <td>{{entry.make}}</td>
-                            <td>{{entry.year}}</td>
+                            <td>{{entry.event_date}}</td>
                             <td>{{entry.odometer}}</td>
-                            <td><a href="/vehicles/{{vehicle.id}}/fuel">Make Fuel Entry</a> | <a href="/vehicles/{{vehicle.id}}/maint">Make Maintenance Entry</a></td>
+                            <td>{{entry.trip}}</td>
+                            <td>{{entry.gallons}}</td>
+                            <td>{{entry.mpg}}</td>
                         </tr>
                     {% endfor %}
                 </tbody>
+                <br>
+                <a href="/vehicles/{{vehicle.id}}/fuel">Make Fuel Entry</a> | <a href="/vehicles/{{vehicle.id}}">Go Back to Vehicle Page</a>
         </main>
 
 
