@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <meta name="" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'recordtracker/css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'recordtracker/css/style.css' %}">
+        <script src="{% static 'recordtracker/js/jquery-3.4.1.min.js' %}"></script>
+        <script src="{% static 'recordtracker/js/bootstrap.bundle.min.js' %}"></script>
+        <script src="{% static 'recordtracker/js/script.js' %}"></script>
+        <link rel="shortcut icon" href="{% static 'recordtracker/img/favicon.ico' %}">
+        <!-- Sample img <img src="{% static 'recordtracker/img/image.jpg' %}" /> -->
+
+    </head>
+    <body class="container">
+        <header class="row">
+            <h2 class="col-md-5">Hello {{name}}!</h2>
+            <div class="col-md-2">
+                <p class="logout"><a href="/main">Main Roster</a></p>
+                </div>
+            <div class="col-md-1 offset-md-1">
+                <p class="logout"><a href="/logout">Log Out</a></p>
+                </div>
+        </header>
+        <br> <!-- Yep! Break-kun is here too. He looks good and gives the right amount
+                    of visual spacing relative to content size. Don't hate.-->
+
+
+        <main class="col-md-6">
+            <h5>{{vehicle.model}}</h5>
+            <div class="col-md-11 tripbox">
+                <p>Make: {{vehicle.make}}</p>
+                <p>Year: {{vehicle.year}}</p>
+                <p>Current Odometer: {{vehicle.odometer}}</p>
+                <p>Log Started: {{vehicle.logstart}}</p>
+                <p>Last Oil Change (odometer): {{vehicle.lastoilchg}}</p>
+                <p>Oil Used: {{vehicle.oil_used}}</p>
+                <p>Highway MPG Avg (last 10): {{vehicle.hwy_mpg}}</p>
+                <p>City MPG Avg (last 10): {{vehicle.city_mpg}}</p>
+                <p>Offroad Avg (last): {{vehicle.off_mpg}}</p>
+                <p>Combined MPG: {{vehicle.combine_mpg}}</p>
+                <p>Tires: {{vehicle.tires}}</p>
+                <p>Notes: {{vehicle.notes}}</p>
+            </div>
+            <br>
+            <div class="col-md-11">
+                <a href="/vehicles/{{vehicle.id}}/edit" class="btn btn-warning col-md-2 offset-md-1">Edit</a>
+                <a href="/vehicles/{{vehicle.id}}/fuel" class="btn btn-warning col-md-2 offset-md-1">Fuel</a>
+                <a href="/vehicles/{{vehicle.id}}/maint" class="btn btn-warning col-md-2 offset-md-1">Maint</a>
+            </div>
+            <br>
+            <br>
+        </main>
+
+
+        <footer>
+
+        </footer>
+
+    </body>
+</html>

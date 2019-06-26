@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <meta name="" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'recordtracker/css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'recordtracker/css/style.css' %}">
+        <script src="{% static 'recordtracker/js/jquery-3.4.1.min.js' %}"></script>
+        <script src="{% static 'recordtracker/js/bootstrap.bundle.min.js' %}"></script>
+        <script src="{% static 'recordtracker/js/script.js' %}"></script>
+        <link rel="shortcut icon" href="{% static 'recordtracker/img/favicon.ico' %}">
+        <!-- Sample img <img src="{% static 'recordtracker/img/image.jpg' %}" /> -->
+
+    </head>
+    <body class="container">
+        <header class="row">
+            <h2 class="col-md-6">Hello name_here!</h2>
+            <div class="col-md-1">
+                <p class="logout"><a href="/logout">Log Out</a></p>
+                </div>
+            <a href="/vehicles/new" class="btn btn-default btn-primary col-md-2 offset-md-1" role="button">Add a Vehicle!</a>
+        </header>
+        <br> <!-- Ha... the dastardly break strikes again -->
+
+
+        <main>
+            <h4>Select a vehicle</h4>
+            <table class="table table-bordered table-hover table-dark col-md-10">
+                <thead>
+                    <th scope='col'>Model</th>
+                    <th scope='col'>Make</th>
+                    <th scope='col'>Year</th>
+                    <th scope='col'>Odometer</th>
+                    <th scope='col'>Actions</th>
+                </thead>
+                <tbody>
+                    {% for vehicle in vehicle_list %}
+                        <tr>
+                            <td><a href="/vehicles/{{vehicle.id}}">{{vehicle.model}}</a></td>
+                            <td>{{vehicle.make}}</td>
+                            <td>{{vehicle.year}}</td>
+                            <td>{{vehicle.odometer}}</td>
+                            <td><a href="/vehicles/{{vehicle.id}}/fuel">Make Fuel Entry</a> | <a href="/vehicles/{{vehicle.id}}/maint">Make Maintenance Entry</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+        </main>
+
+
+        <footer>
+
+        </footer>
+
+    </body>
+</html>
