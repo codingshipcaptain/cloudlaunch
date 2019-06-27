@@ -136,9 +136,89 @@ class VehicleFuelManager(models.Manager):
             mpg_return = float(postData['trip_meter']) / float(postData['gallons'])
             VehicleFueling.objects.create(event_date = postData['event_date'], odometer = postData['odometer'],
                 trip_meter = postData['trip_meter'], gallons = postData['gallons'],
-                hwy = Ehwy, city = Ecity, off = Eoff, combine = Ecombine, mpg = mpg_return, ppg = postData['ppg'], not_full = False, vehicle = this_vehicle)
-        this_vehicle.odometer = postData['odometer']
-        this_vehicle.save()
+                hwy = Ehwy, city = Ecity, off = Eoff, combine = Ecombine, mpg = mpg_return, ppg = postData['ppg'], not_full = False,
+                vehicle = this_vehicle)
+        if int(this_vehicle.odometer) < int(postData['odometer']):
+            this_vehicle.odometer = int(postData['odometer'])
+            this_vehicle.save()
+        return True
+
+    def update_fuel(self, this_vehicle, fid, postData):
+        update_me = VehicleFueling.objects.get(id = fid)
+        Ehwy = False
+        Ecity = False
+        Eoff = False
+        Ecombine = False
+        if postData['driving_type'] == 'hwy':
+            Ehwy = True
+        elif postData['driving_type'] == 'city':
+            Ecity = True
+        elif postData['driving_type'] == 'off':
+            Eoff = True
+        else:
+            Ecombine = True
+        update_me.event_date = postData['event_date']
+        update_me.odometer = postData['odometer']
+        update_me.trip_meter = postData['trip_meter']
+        update_me.gallons = postData['gallons']
+        update_me.hwy = Ehwy
+        update_me.city = Ecity
+        update_me.off = Eoff
+        update_me.combine = Ecombine
+        update_me.mpg = postData['mpg']
+        update_me.ppg = postData['ppg']
+        update_me.not_full = False
+        update_me.vehicle = this_vehicle
+        update_me.save()
+        if int(this_vehicle.odometer) < int(postData['odometer']):
+            this_vehicle.odometer = int(postData['odometer'])
+            this_vehicle.save()
+        return True
+
+
+    def delete_fuel(self, fid):
+        delete_me = VehicleFueling.objects.get(id = fid)
+        delete_me.delete()
+        return True
+
+
+
+class VehicleMaintManager(models.Manager):
+    def create_maint_entry(self, this_vehicle, postData):
+        VehicleMaint.objects.create(event_date = postData['event_date'],
+            odometer = postData['odometer'], provider = postData['provider'],
+            maint= postData['maint'], is_oilchg = postData['is_oilchg'],
+             vehicle = this_vehicle)
+        if int(this_vehicle.odometer) < int(postData['odometer']):
+            this_vehicle.odometer = int(postData['odometer'])
+            this_vehicle.save()
+        if postData['is_oilchg'] == True and int(postData['odometer']) > int(this_vehicle.lastoilchg):
+            this_vehicle.lastoilchg = postData['odometer']
+            this_vehicle.oil_used = postData['oil_used']
+            this_vehicle.save()
+        if 'new_tire' in postData:
+            this_vehicle.tires = postData['new_tire']
+
+    def update_maint(self, this_vehicle, mid, postData):
+        update_me = VehicleMaint.objects.get(id = mid)
+        update_me.event_date = postData['event_date']
+        update_me.odometer = postData['odometer']
+        update_me.provider = postData['provider']
+        update_me.maint = postData['maint']
+        update_me.is_oilchg = postData['is_oilchg']
+        update_me.oil_used = postData['oil_used']
+        update_me.vehicle = this_vehicle
+        update_me.save()
+        if int(this_vehicle.odometer) < int(postData['odometer']):
+            this_vehicle.odometer = int(postData['odometer'])
+            this_vehicle.save()
+        return True
+
+
+    def delete_maint(self, mid):
+        delete_me = VehicleMaint.objects.get(id = mid)
+        delete_me.delete()
+        return True
 
 
 class VehicleMaint(models.Model):
@@ -147,10 +227,11 @@ class VehicleMaint(models.Model):
     provider = models.CharField(max_length = 255)
     maint = models.TextField()
     is_oilchg = models.BooleanField()
+    oil_used = models.CharField(max_length = 255, null=True, blank=True)
     vehicle = models.ForeignKey(VehicleStats, related_name='records', on_delete=models.SET_NULL, null=True)
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
-    # objects = VehicleMaintManager()
+    objects = VehicleMaintManager()
 
     def __repr__(self):
         return f"<Maintenance Event Date: {self.event_date} ({self.id})>"

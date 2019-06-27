@@ -29,8 +29,13 @@
                     of visual spacing relative to content size. Don't hate.-->
 
 
-        <main class="col-md-6">
-            <h5>{{vehicle.model}}</h5>
+        <main class="col-md-10">
+            <div class="col-md-12">
+                <h5 class="col-md-3" style="display: inline">{{vehicle.model}}</h5>
+                <a href="/vehicles/{{vehicle.id}}/edit" class="btn btn-warning col-md-2 offset-md-1">Edit</a>
+                <a href="/vehicles/{{vehicle.id}}/fuel" class="btn btn-warning col-md-2 offset-md-1">Fuel</a>
+                <a href="/vehicles/{{vehicle.id}}/maint" class="btn btn-warning col-md-2 offset-md-1">Maint</a>
+            </div>
             <div class="col-md-11 tripbox">
                 <p>Make: {{vehicle.make}}</p>
                 <p>Year: {{vehicle.year}}</p>
@@ -44,12 +49,6 @@
                 <p>Combined MPG: {{vehicle.combine_mpg}}</p>
                 <p>Tires: {{vehicle.tires}}</p>
                 <p>Notes: {{vehicle.notes}}</p>
-            </div>
-            <br>
-            <div class="col-md-11">
-                <a href="/vehicles/{{vehicle.id}}/edit" class="btn btn-warning col-md-2 offset-md-1">Edit</a>
-                <a href="/vehicles/{{vehicle.id}}/fuel" class="btn btn-warning col-md-2 offset-md-1">Fuel</a>
-                <a href="/vehicles/{{vehicle.id}}/maint" class="btn btn-warning col-md-2 offset-md-1">Maint</a>
             </div>
             <br>
             <br>

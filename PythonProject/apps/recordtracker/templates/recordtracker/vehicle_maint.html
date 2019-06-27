@@ -21,7 +21,7 @@
             <div class="col-md-1">
                 <p class="logout"><a href="/logout">Log Out</a></p>
                 </div>
-            <a href="/vehicles/new" class="btn btn-default btn-primary col-md-2 offset-md-1" role="button">Add a Vehicle!</a>
+            <a href="/main" class="btn btn-default btn-primary col-md-2 offset-md-1" role="button">Vehicle Roster</a>
         </header>
         <br> <!-- Ha... the dastardly break strikes again -->
 
@@ -34,20 +34,22 @@
                     <th scope='col'>Odometer</th>
                     <th scope='col'>Provider</th>
                     <th scope='col'>Maintenance Done</th>
+                    <th scope='col'>Remove Entry</th>
                 </thead>
                 <tbody>
                     {% for entry in maint %}
                         <tr>
-                            <td><a href="/vehicles/{{vehicle.id}}/fuel/{{entry.id}}/edit">{{entry.event_date}}</a></td>
+                            <td><a href="/vehicles/{{vehicle.id}}/maint/{{entry.id}}/edit">{{entry.event_date}}</a></td>
                             <td>{{entry.odometer}}</td>
                             <td>{{entry.provider}}</td>
                             <td>{{entry.maint}}</td>
+                            <td><a href="/vehicles/{{vehicle.id}}/maint/{{entry.id}}/delete">Delete</a></td>
                         </tr>
                     {% endfor %}
                 </tbody>
                 <br>
             </table>
-                <a href="/vehicles/{{vehicle.id}}/fuel/add">Make Fuel Entry</a> | <a href="/vehicles/{{vehicle.id}}">Go Back to Vehicle Page</a>
+                <a href="/vehicles/{{vehicle.id}}/maint/add">Make Maint Entry</a> | <a href="/vehicles/{{vehicle.id}}">Go Back to Vehicle Page</a>
         </main>
 
 

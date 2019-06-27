@@ -79,37 +79,68 @@ def create_fuel(request, vic):
 
 
 def edit_fuel(request, vic, fid):
-    return redirect('/')
+    this_vehicle = VehicleStats.objects.get(id = vic)
+    this_fuel = VehicleFueling.objects.get(id = fid)
+    content = {
+        'this_fuel': this_fuel,
+        'vehicle': this_vehicle
+    }
+    return render(request, 'recordtracker/edit_fuel.html', content)
 
 
 def update_fuel(request, vic, fid):
-    return redirect('/')
+    this_vehicle = VehicleStats.objects.get(id = vic)
+    VehicleFueling.objects.update_fuel(vic, fid, request.POST)
+    return redirect('/vehicles/'+str(this_vehicle.id)+'/fuel')
 
 
 def delete_fuel(request, vic, fid):
-    return redirect('/')
+    this_vehicle = VehicleStats.objects.get(id = vic)
+    VehicleFueling.objects.delete_fuel(fid)
+    return redirect('/vehicles/'+str(this_vehicle.id)+'/fuel')
 
 
 def maint(request, vic):
-    return redirect('/')
+    this_vehicle = VehicleStats.objects.get(id = vic)
+    maint = VehicleMaint.objects.filter(vehicle = this_vehicle).order_by('-odometer')
+    content = {
+        'maint' : maint,
+        'vehicle' : this_vehicle
+    }
+    return render(request, 'recordtracker/vehicle_maint.html', content)
 
 
 def add_maint(request, vic):
-    return redirect('/')
+    this_vehicle = VehicleStats.objects.get(id = vic)
+    content = {
+        'vehicle' : this_vehicle
+    }
+    return render(request, 'recordtracker/add_maint.html', content)
 
 
 def create_maint(request, vic):
     this_vehicle = VehicleStats.objects.get(id = vic)
+    VehicleMaint.objects.create_maint_entry(this_vehicle, request.POST)
     return redirect('/vehicles/'+str(this_vehicle.id)+'/maint')
 
 
 def edit_maint(request, vic, mid):
-    return redirect('/')
+    this_vehicle = VehicleStats.objects.get(id = vic)
+    this_maint = VehicleMaint.objects.get(id = mid)
+    content = {
+        'this_maint': this_maint,
+        'vehicle': this_vehicle
+    }
+    return render(request, 'recordtracker/edit_maint.html', content)
 
 
 def update_maint(request, vic, mid):
-    return redirect('/')
+    this_vehicle = VehicleStats.objects.get(id = vic)
+    VehicleMaint.objects.update_maint(this_vehicle, mid, request.POST)
+    return redirect('/vehicles/'+str(this_vehicle.id)+'/maint')
 
 
 def delete_maint(request, vic, mid):
-    return redirect('/')
+    this_vehicle = VehicleStats.objects.get(id = vic)
+    VehicleMaint.objects.delete_maint(mid)
+    return redirect('/vehicles/'+str(this_vehicle.id)+'/maint')
