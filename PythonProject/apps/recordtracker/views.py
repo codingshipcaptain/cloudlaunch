@@ -25,23 +25,23 @@ def create(request):
 
 
 def show(request, vic):
-    vehicle = VehicleStats.objects.get(id = vic)
+    this_vehicle = VehicleStats.objects.get(id = vic)
     content = {
-        'vehicle' : vehicle,
+        'vehicle' : this_vehicle,
     }
     return render(request, 'recordtracker/vehicle.html', content)
 
 
 def edit(request, vic):
-    vehicle = VehicleStats.objects.get(id = vic)
+    this_vehicle = VehicleStats.objects.get(id = vic)
     content = {
-        'vehicle' : vehicle,
+        'vehicle' : this_vehicle,
     }
     return render(request, 'recordtracker/edit.html', content)
 
 
 def update(request, vic):
-    vehicle = VehicleStats.objects.get(id = vic)
+    this_vehicle = VehicleStats.objects.get(id = vic)
     vehicle.make = request.POST['make']
     vehicle.model = request.POST['model']
     vehicle.year = request.POST['year']
@@ -50,49 +50,66 @@ def update(request, vic):
     vehicle.oil_used = request.POST['oil_used']
     vehicle.tires = request.POST['tires']
     vehicle.notes = request.POST['notes']
-    return redirect('/vehicles/'+str(vehicle.id))
+    return redirect('/vehicles/'+str(this_vehicle.id))
 
 
 def fuel(request, vic):
-    vehicle = VehicleStats.objects.get(id = vic)
-    fuel = VehicleFueling.objects.get(VehicleStats = vehicle)
+    this_vehicle = VehicleStats.objects.get(id = vic)
+    fuel = VehicleFueling.objects.filter(vehicle = this_vehicle).order_by('-odometer')
     content = {
-        'fuel': fuel
+        'fuel': fuel,
+        'vehicle': this_vehicle,
     }
+    return render(request, 'recordtracker/vehicle_fuel.html', content)
+
+
+def add_fuel(request, vic):
+    this_vehicle = VehicleStats.objects.get(id = vic)
+    content = {
+        'vehicle': this_vehicle,
+    }
+    return render(request, 'recordtracker/add_fuel.html', content)
+
+
+def create_fuel(request, vic):
+    print(request.POST)
+    this_vehicle = VehicleStats.objects.get(id = vic)
+    VehicleFueling.objects.create_fuel_entry(request.POST, this_vehicle)
+    return redirect('/vehicles/'+str(this_vehicle.id)+'/fuel')
+
+
+def edit_fuel(request, vic, fid):
     return redirect('/')
 
 
-def add_fuel():
+def update_fuel(request, vic, fid):
     return redirect('/')
 
 
-def edit_fuel():
+def delete_fuel(request, vic, fid):
     return redirect('/')
 
 
-def update_fuel():
+def maint(request, vic):
     return redirect('/')
 
 
-def delete_fuel():
+def add_maint(request, vic):
     return redirect('/')
 
 
-def maint():
+def create_maint(request, vic):
+    this_vehicle = VehicleStats.objects.get(id = vic)
+    return redirect('/vehicles/'+str(this_vehicle.id)+'/maint')
+
+
+def edit_maint(request, vic, mid):
     return redirect('/')
 
 
-def add_maint():
+def update_maint(request, vic, mid):
     return redirect('/')
 
 
-def edit_maint():
-    return redirect('/')
-
-
-def update_maint():
-    return redirect('/')
-
-
-def delete_maint():
+def delete_maint(request, vic, mid):
     return redirect('/')
