@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Wish Maker 9000</title>
+        <meta name="Wish Maker 9000" content="Wish Storage Device">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'wish_app/css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'wish_app/css/style.css' %}">
+        <script src="{% static 'wish_app/js/jquery-3.4.1.min.js' %}"></script>
+        <script src="{% static 'wish_app/js/bootstrap.bundle.min.js' %}"></script>
+        <script src="{% static 'wish_app/js/script.js' %}"></script>
+        <link rel="shortcut icon" href="{% static 'wish_app/img/favicon.ico' %}">
+
+    </head>
+    <body>
+        <div class="container-fluid">
+            <header>
+                <h1 class="row">Welcome! Let's Make a Wish!</h1>
+            </header>
+
+
+            <main>
+                <div class="row">
+                    <div class="col-md-4 border">
+                        <h2>Register</h2>
+                        {% if messages %}
+                        <ul class="messages">
+                            {% for message in messages %}
+                                {% if 'reg' in message.extra_tags %}
+                                    <li>{{ message }}</li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                        <form action="/registration" method="POST" class="container">
+                            {% csrf_token %}
+                            <div class="row rowpad">
+                                <p class="col-md-6">First Name: </p> <input class="col-md-6" type="text" name="first_name">
+                                </div>
+                            <div class="row rowpad">
+                                <p class="col-md-6">Last Name:  </p> <input class="col-md-6" type="text" name="last_name">
+                                </div>
+                            <div class="row rowpad">
+                                <p class="col-md-6">Email: </p> <input class="col-md-6" type="text" name="email">
+                                </div>
+                            <div class="row rowpad">
+                                <p class="col-md-6">Password: </p> <input class="col-md-6" type="password" name="password">
+                                </div>
+                            <div class="row rowpad">
+                                <p class="col-md-6">Confirm Password: </p> <input class="col-md-6" type="password" name="cpassword">
+                                </div>
+                            <div class="row rowpad">
+                                <input class="col-md-3 offset-md-7" type="submit" class="btn btn-warning" value="Create">
+                                </div>
+                        </form>
+                    </div>
+                    <div class="col-md-3 offset-md-1 border">
+                        <h2>Login Here!</h2>
+                        {% if messages %}
+                        <ul class="messages">
+                            {% for message in messages %}
+                                {% if 'login' in message.extra_tags %}
+                                    <li>{{ message }}</li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                        <form action="/login" method="POST" class="container">
+                            {% csrf_token %}
+                            <div class="row rowpad">
+                                <p class="col-md-6">Email: </p> <input class="col-md-6" type="text" name="email">
+                                </div>
+                            <div class="row rowpad">
+                                <p class="col-md-6">Password: </p> <input class="col-md-6" type="password" name="password">
+                                </div>
+                            <div class="row rowpad">
+                                <input class="col-md-3 offset-md-9" type="submit" class="btn btn-warning" value="Sign In">
+                                </div>
+                        </form>
+                    </div>
+                </div>
+
+            </main>
+
+
+            <footer>
+
+            </footer>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Wish Maker 9000</title>
+        <meta name="Wish Maker 9000" content="Wish Storage Device">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'wish_app/css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'wish_app/css/style.css' %}">
+        <script src="{% static 'wish_app/js/jquery-3.4.1.min.js' %}"></script>
+        <script src="{% static 'wish_app/js/bootstrap.bundle.min.js' %}"></script>
+        <script src="{% static 'wish_app/js/script.js' %}"></script>
+        <link rel="shortcut icon" href="{% static 'wish_app/img/favicon.ico' %}">
+
+    </head>
+    <body class="container-fluid">
+        <header class="row">
+            <h2 class="col-md-6">Hello {{name}}!</h2>
+            <div class="col-md-1">
+                <p class="logout"><a href="/logout">Log Out</a></p>
+                </div>
+            <a href="/wishes/stats" class="btn btn-default btn-primary col-md-1" role="button">View Stats</a>
+            <a href="/wishes/new" class="btn btn-default btn-primary col-md-1 offset-md-1" role="button"><small>Make a wish!</small></a>
+        </header>
+        <br> <!-- Ha... the dastardly break strikes again -->
+
+
+        <main>
+            <h4>Your wish list: </h4>
+            <table class="table table-bordered table-hover table-dark col-md-10">
+                <thead>
+                    <th scope='col'>Item</th>
+                    <th scope='col'>Date added</th>
+                    <th scope='col'>Actions</th>
+                </thead>
+                <tbody>
+                    {% for wish in wishes %}
+                        <tr>
+                            <td><a href="/wishes/{{wish.id}}">{{wish.wish}}</a></td>
+                            <td>{{wish.created_at}}</td>
+                            <td><a href="/wishes/{{wish.id}}/delete">Remove</a> | <a href="/wishes/{{wish.id}}/edit">Edit</a> | <a href="/wishes/{{wish.id}}/granted">Granted!</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <br>
+            <br>
+            <table class="table table-bordered table-hover table-dark col-md-10">
+                <thead>
+                    <th scope='col'>Item</th>
+                    <th scope='col'>Wisher</th>
+                    <th scope='col'>Date added</th>
+                    <th scope='col'>Date Granted</th>
+                    <th scope='col'>Likes</th>
+                    <th scope='col'>Actions</th>
+                </thead>
+                <tbody>
+                    {% for wish in granted %}
+                        <tr>
+                            <td><a href="/wishes/{{wish.id}}">{{wish.wish}}</a></td>
+                            <td>{{wish.created_by.first_name}}</td>
+                            <td>{{wish.created_at}}</td>
+                            <td>{{wish.granted_date}}</td>
+                            <td>{{wish.likes}}</td>
+                            <td>{% if user.id != wish.created_by.id %}
+                                    {% if user not in wish.liked_by.all %}
+                                        <a href="/wishes/{{wish.id}}/like">Like</a>
+                                    {% endif %}
+                                {% endif %}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </main>
+
+
+        <footer>
+
+        </footer>
+
+    </body>
+</html>

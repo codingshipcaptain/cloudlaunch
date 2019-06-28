@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Edit Wish</title>
+        <meta name="Wish Maker 9000" content="Wish Storage Device">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'wish_app/css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'wish_app/css/style.css' %}">
+        <script src="{% static 'wish_app/js/jquery-3.4.1.min.js' %}"></script>
+        <script src="{% static 'wish_app/js/bootstrap.bundle.min.js' %}"></script>
+        <script src="{% static 'wish_app/js/script.js' %}"></script>
+        <link rel="shortcut icon" href="{% static 'wish_app/img/favicon.ico' %}">
+
+    </head>
+    <body>
+        <div class="container">
+            <header class="row">
+                <h2 class="col-md-6">Hello {{name}}! Let's edit your Wish!</h2>
+                <a href="/logout" class="col-md-1 offset-md-3">Log Out</a>
+            </header>
+
+
+            <main>
+                {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        {% if 'update' in message.extra_tags %}
+                            <li>{{ message }}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                <div class="row">
+                    <form action="/wishes/{{wish.id}}/update" method="POST" class="col-md-6 border">
+                        {% csrf_token %}
+                        <div class="row rowpad">
+                            <p class="col-md-5">Destination: </p> <input class="col-md-6" type="text" name="dest" value="{{wish.wish}}">
+                            </div>
+                        <div class="row rowpad">
+                            <p class="col-md-5">Plan: </p> <textarea class="col-md-6" name="plan" rows="8" cols="col-md-6">{{wish.desc}}</textarea>
+                            </div>
+                        <div class="row rowpad">
+                            <a href="/dashboard" class="btn btn-warning col-md-3 offset-md-5" value="Cancel">Cancel</a>
+                            <input class="col-md-3" type="submit" class="btn btn-success" value="Edit">
+                            </div>
+                    </form>
+                </div>
+
+
+            </main>
+
+
+            <footer>
+
+            </footer>
+
+        </div>
+    </body>
+</html>
