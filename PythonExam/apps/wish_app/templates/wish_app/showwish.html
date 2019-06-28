@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Wish Details</title>
+        <meta name="Wish Maker 9000" content="Wish Storage Device">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'wish_app/css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'wish_app/css/style.css' %}">
+        <script src="{% static 'wish_app/js/jquery-3.4.1.min.js' %}"></script>
+        <script src="{% static 'wish_app/js/bootstrap.bundle.min.js' %}"></script>
+        <script src="{% static 'wish_app/js/script.js' %}"></script>
+        <link rel="shortcut icon" href="{% static 'wish_app/img/favicon.ico' %}">
+
+    </head>
+    <body class="container-fluid">
+        <header class="row">
+            <h2 class="col-md-5">Hello {{name}}!</h2>
+            <div class="col-md-1">
+                <p class="logout"><a href="/dashboard">Dashboard</a></p>
+                </div>
+            <div class="col-md-1 offset-md-1">
+                <p class="logout"><a href="/logout">Log Out</a></p>
+                </div>
+        </header>
+        <br> <!-- Yep! Break-kun is here too. He looks good and gives the right amount
+                    of visual spacing relative to content size. Don't hate.-->
+
+
+        <main class="col-md-5">
+            <h5>I wish for a <b>{{wish.wish}}</b></h5>
+            <div class="col-md-11 tripbox">
+                <p>Description: {{wish.desc}}</p>
+                <p>Created On: {{wish.created_at}}</p>
+                <p>Last Updated: {{wish.updated_at}}</p>
+                <p>Created By: {{wish.created_by.first_name}}</p>
+            </div>
+
+        </main>
+
+
+        <footer>
+
+        </footer>
+
+    </body>
+</html>

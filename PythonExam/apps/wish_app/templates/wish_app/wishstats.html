@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Make a Wish</title>
+        <meta name="Wish Maker 9000" content="Wish Storage Device">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'wish_app/css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'wish_app/css/style.css' %}">
+        <script src="{% static 'wish_app/js/jquery-3.4.1.min.js' %}"></script>
+        <script src="{% static 'wish_app/js/bootstrap.bundle.min.js' %}"></script>
+        <script src="{% static 'wish_app/js/script.js' %}"></script>
+        <link rel="shortcut icon" href="{% static 'wish_app/img/favicon.ico' %}">
+
+    </head>
+    <body>
+        <div class="container">
+            <header class="row">
+                <h2 class="col-md-6">Hello {{name}}! These are your stats!</h2>
+                <a href="/dashboard" class="col-md-1 offset-md-1">Dashboard</a>
+                <a href="/logout" class="col-md-1 offset-md-1">Log Out</a>
+            </header>
+
+
+            <main>
+                <br>
+                <h4>Total wishes granted so far for all users: {{total_granted}}</h4>
+                <br>
+                <h5>Your granted wishes: {{user_granted}}</h5>
+                <h5>Your pending wishes: {{user_pending}}</h5>
+            </main>
+
+
+            <footer>
+
+            </footer>
+
+        </div>
+    </body>
+</html>

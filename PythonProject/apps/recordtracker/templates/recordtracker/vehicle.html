@@ -37,18 +37,40 @@
                 <a href="/vehicles/{{vehicle.id}}/maint" class="btn btn-warning col-md-2 offset-md-1">Maint</a>
             </div>
             <div class="col-md-11 tripbox">
-                <p>Make: {{vehicle.make}}</p>
-                <p>Year: {{vehicle.year}}</p>
-                <p>Current Odometer: {{vehicle.odometer}}</p>
-                <p>Log Started: {{vehicle.logstart}}</p>
-                <p>Last Oil Change (odometer): {{vehicle.lastoilchg}}</p>
-                <p>Oil Used: {{vehicle.oil_used}}</p>
-                <p>Highway MPG Avg (last 10): {{vehicle.hwy_mpg}}</p>
-                <p>City MPG Avg (last 10): {{vehicle.city_mpg}}</p>
-                <p>Offroad Avg (last): {{vehicle.off_mpg}}</p>
-                <p>Combined MPG: {{vehicle.combine_mpg}}</p>
-                <p>Tires: {{vehicle.tires}}</p>
-                <p>Notes: {{vehicle.notes}}</p>
+                <div class="col-md-6">
+                    <p>Make: {{vehicle.make}}</p>
+                    <p>Year: {{vehicle.year}}</p>
+                    <p>Current Odometer: {{vehicle.odometer}}</p>
+                    <p>Log Started: {{vehicle.logstart}}</p>
+                    <p>Last Oil Change (odometer): {{vehicle.lastoilchg}}</p>
+                    <p>Oil Used: {{vehicle.oil_used}}</p>
+                    <p>Highway MPG Avg (last 10): {{vehicle.hwy_mpg}}</p>
+                    <p>City MPG Avg (last 10): {{vehicle.city_mpg}}</p>
+                    <p>Offroad Avg (last): {{vehicle.off_mpg}}</p>
+                    <p>Combined MPG: {{vehicle.combine_mpg}}</p>
+                    <p>Tires: {{vehicle.tires}}</p>
+                    <p>Notes: {{vehicle.notes}}</p>
+                </div>
+                <div class="col-md-6">
+                    <table class="table table-bordered table-hover table-dark col-md-11">
+                        <thead>
+                            <th scope='col'>Fuel Economy</th>
+                            <th scope=""></th>
+                        </thead>
+                        <tbody>
+                            {% for vehicle in vehicle_list %}
+                                <tr>
+                                    <td><a href="/vehicles/{{vehicle.id}}">{{vehicle.model}}</a></td>
+                                    <td>{{vehicle.make}}</td>
+                                    <td>{{vehicle.year}}</td>
+                                    <td>{{vehicle.odometer}}</td>
+                                    <td>{{vehicle.hwy_mpg}}/{{vehicle.city_mpg}}/{{vehicle.off_mpg}}/{{vehicle.combine_mpg}}</td>
+                                    <td><a href="/vehicles/{{vehicle.id}}/fuel">Review Fuel Entries</a> | <a href="/vehicles/{{vehicle.id}}/maint">Review Maintenance Entries</a></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                </div>
+
             </div>
             <br>
             <br>
