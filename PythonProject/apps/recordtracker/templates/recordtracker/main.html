@@ -28,12 +28,13 @@
 
         <main>
             <h4>Select a vehicle</h4>
-            <table class="table table-bordered table-hover table-dark col-md-10">
+            <table class="table table-bordered table-hover table-dark col-md-11">
                 <thead>
                     <th scope='col'>Model</th>
                     <th scope='col'>Make</th>
                     <th scope='col'>Year</th>
                     <th scope='col'>Odometer</th>
+                    <th scope='col'>HWY/CITY/OFF/COMBINED</th>
                     <th scope='col'>Actions</th>
                 </thead>
                 <tbody>
@@ -43,6 +44,7 @@
                             <td>{{vehicle.make}}</td>
                             <td>{{vehicle.year}}</td>
                             <td>{{vehicle.odometer}}</td>
+                            <td>{{vehicle.hwy_mpg}}/{{vehicle.city_mpg}}/{{vehicle.off_mpg}}/{{vehicle.combine_mpg}}</td>
                             <td><a href="/vehicles/{{vehicle.id}}/fuel">Review Fuel Entries</a> | <a href="/vehicles/{{vehicle.id}}/maint">Review Maintenance Entries</a></td>
                         </tr>
                     {% endfor %}

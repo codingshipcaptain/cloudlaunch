@@ -4,17 +4,61 @@ from django.contrib import messages
 import bcrypt
 import re
 
-# class VehicleStatsManager(models.Manager):
-    # def basic_validator(self, postData):
-    #     errors = {}
-    #     EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+.[a-zA-Z]+$')
-    #     if len(postData['FIELD']) < 2:
-    #         errors['FIELD'] = "FIELD should be at least 2 characters"
-    #     if len(postData['FIELD']) < 3:
-    #         errors['FIELD'] = "FIELD should be at least 2 characters"
-    #     if len(postData['FIELD']) < 10:
-    #         errors['FIELD'] = "FIELD should be at least 10 characters"
-    #     return errors
+class VehicleStatsManager(models.Manager):
+    def basic_validator(self, postData):
+        errors = {}
+        EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+.[a-zA-Z]+$')
+        if len(postData['FIELD']) < 2:
+            errors['FIELD'] = "FIELD should be at least 2 characters"
+        if len(postData['FIELD']) < 3:
+            errors['FIELD'] = "FIELD should be at least 2 characters"
+        if len(postData['FIELD']) < 10:
+            errors['FIELD'] = "FIELD should be at least 10 characters"
+        return errors
+
+    def fuel_numbers(self, this_vehicle):
+        hwy_fuel = VehicleFueling.objects.filter(vehicle = this_vehicle, hwy = True).order_by('-odometer')[:10]
+        hwy_mpg = 0
+        city_mpg = 0
+        off_mpg = 0
+        combine_mpg = 0
+        sum = 0
+        if len(hwy_fuel) > 0:
+            for econ in hwy_fuel:
+                sum += econ.mpg
+            this_vehicle.hwy_mpg = sum/len(hwy_fuel)
+        else:
+            this_vehicle.hwy_mpg = 0.0
+
+        city_fuel = VehicleFueling.objects.filter(vehicle = this_vehicle, city = True).order_by('-odometer')[:10]
+        sum = 0
+        if len(city_fuel) > 0:
+            for econ in city_fuel:
+                sum += econ.mpg
+            this_vehicle.city_mpg = sum/len(city_fuel)
+        else:
+            this_vehicle.city_mpg = 0.0
+
+        off_fuel = VehicleFueling.objects.filter(vehicle = this_vehicle, off = True).order_by('-odometer')[:10]
+        sum = 0
+        if len(off_fuel) > 0:
+            for econ in off_fuel:
+                sum += econ.mpg
+            this_vehicle.off_mpg = sum/len(off_fuel)
+        else:
+            this_vehicle.off_mpg = 0.0
+
+        combine_fuel = VehicleFueling.objects.filter(vehicle = this_vehicle, combine = True).order_by('-odometer')[:10]
+        sum = 0
+        if len(combine_fuel) > 0:
+            for econ in off_fuel:
+                sum += econ.mpg
+            this_vehicle.combine_mpg = sum/len(combine_fuel)
+        else:
+            this_vehicle.combine_mpg = 0.0
+
+        return True
+
 
 
 class VehicleStats(models.Model):
@@ -35,7 +79,7 @@ class VehicleStats(models.Model):
     gallons_store = models.DecimalField(max_digits=5, decimal_places=3, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
-    # objects = VehicleStatsManager()
+    objects = VehicleStatsManager()
 
     def __repr__(self):
         return f"<Vehicle: {self.model} ({self.id})>"

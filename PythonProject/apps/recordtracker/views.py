@@ -8,10 +8,11 @@ def index(request):
 
 def main(request):
     vehicles = VehicleStats.objects.all()
+    for vehicle in vehicles:
+        VehicleStats.objects.fuel_numbers(vehicle)
     content = {
         'vehicle_list': vehicles,
     }
-
     return render(request, 'recordtracker/main.html', content)
 
 
@@ -26,8 +27,11 @@ def create(request):
 
 def show(request, vic):
     this_vehicle = VehicleStats.objects.get(id = vic)
+    mpg_nums = VehicleStats.objects.fuel_numbers(this_vehicle)
+    print(mpg_nums)
     content = {
         'vehicle' : this_vehicle,
+        'mpg_nums' : mpg_nums
     }
     return render(request, 'recordtracker/vehicle.html', content)
 
