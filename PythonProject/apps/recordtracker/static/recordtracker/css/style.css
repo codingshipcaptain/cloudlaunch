@@ -21,3 +21,7 @@
 li {
     color: red;
 }
+
+.sidebyside {
+    display: inline-block;
+}

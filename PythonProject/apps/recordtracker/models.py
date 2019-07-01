@@ -17,11 +17,12 @@ class VehicleStatsManager(models.Manager):
         return errors
 
     def fuel_numbers(self, this_vehicle):
-        hwy_fuel = VehicleFueling.objects.filter(vehicle = this_vehicle, hwy = True).order_by('-odometer')[:10]
         hwy_mpg = 0
         city_mpg = 0
         off_mpg = 0
         combine_mpg = 0
+
+        hwy_fuel = VehicleFueling.objects.filter(vehicle = this_vehicle, hwy = True, not_full = False)
         sum = 0
         if len(hwy_fuel) > 0:
             for econ in hwy_fuel:
@@ -30,7 +31,7 @@ class VehicleStatsManager(models.Manager):
         else:
             this_vehicle.hwy_mpg = 0.0
 
-        city_fuel = VehicleFueling.objects.filter(vehicle = this_vehicle, city = True).order_by('-odometer')[:10]
+        city_fuel = VehicleFueling.objects.filter(vehicle = this_vehicle, city = True, not_full = False)
         sum = 0
         if len(city_fuel) > 0:
             for econ in city_fuel:
@@ -39,7 +40,7 @@ class VehicleStatsManager(models.Manager):
         else:
             this_vehicle.city_mpg = 0.0
 
-        off_fuel = VehicleFueling.objects.filter(vehicle = this_vehicle, off = True).order_by('-odometer')[:10]
+        off_fuel = VehicleFueling.objects.filter(vehicle = this_vehicle, off = True, not_full = False)
         sum = 0
         if len(off_fuel) > 0:
             for econ in off_fuel:
@@ -48,7 +49,7 @@ class VehicleStatsManager(models.Manager):
         else:
             this_vehicle.off_mpg = 0.0
 
-        combine_fuel = VehicleFueling.objects.filter(vehicle = this_vehicle, combine = True).order_by('-odometer')[:10]
+        combine_fuel = VehicleFueling.objects.filter(vehicle = this_vehicle, combine = True, not_full = False)
         sum = 0
         if len(combine_fuel) > 0:
             for econ in off_fuel:
@@ -56,8 +57,54 @@ class VehicleStatsManager(models.Manager):
             this_vehicle.combine_mpg = sum/len(combine_fuel)
         else:
             this_vehicle.combine_mpg = 0.0
-
         return True
+
+    def fuel_numbers_10(self, this_vehicle):
+        hwy_mpg = 0
+        city_mpg = 0
+        off_mpg = 0
+        combine_mpg = 0
+        store_h = 0
+        store_c = 0
+        store_o = 0
+        store_cb = 0
+        hwy_fuel = VehicleFueling.objects.filter(vehicle = this_vehicle, hwy = True).order_by('-odometer')[:10]
+        sum = 0
+        if len(hwy_fuel) > 0:
+            for econ in hwy_fuel:
+                sum += econ.mpg
+            store_h = sum/len(hwy_fuel)
+        else:
+            store_h = 0.0
+
+        city_fuel = VehicleFueling.objects.filter(vehicle = this_vehicle, city = True).order_by('-odometer')[:10]
+        sum = 0
+        if len(city_fuel) > 0:
+            for econ in city_fuel:
+                sum += econ.mpg
+            store_c = sum/len(city_fuel)
+        else:
+            store_c = 0.0
+
+        off_fuel = VehicleFueling.objects.filter(vehicle = this_vehicle, off = True).order_by('-odometer')[:10]
+        sum = 0
+        if len(off_fuel) > 0:
+            for econ in off_fuel:
+                sum += econ.mpg
+            store_o = sum/len(off_fuel)
+        else:
+            store_o = 0.0
+
+        combine_fuel = VehicleFueling.objects.filter(vehicle = this_vehicle, combine = True).order_by('-odometer')[:10]
+        sum = 0
+        if len(combine_fuel) > 0:
+            for econ in off_fuel:
+                sum += econ.mpg
+            store_cb = sum/len(combine_fuel)
+        else:
+            store_cb = 0.0
+
+        return {'store_h': store_h, 'store_c': store_c, 'store_o': store_o, 'store_cb': store_cb}
 
 
 
@@ -114,7 +161,7 @@ class VehicleFuelManager(models.Manager):
         if postData['fill_type'] == 'not_full':
             VehicleFueling.objects.create(event_date = postData['event_date'], odometer = postData['odometer'],
                 trip_meter = postData['trip_meter'], gallons = postData['gallons'],
-                hwy = Ehwy, city = Ecity, off = Eoff, combine = Ecombine, not_full = postData['not_full'])
+                hwy = Ehwy, city = Ecity, off = Eoff, combine = Ecombine, not_full = True)
         elif postData['fill_type'] == 'now_full':
             not_fulls = VehicleFueling.objects.filter(not_full = True)
             do_combine = False
@@ -244,6 +291,7 @@ class VehicleMaintManager(models.Manager):
             this_vehicle.tires = postData['new_tire']
 
     def update_maint(self, this_vehicle, mid, postData):
+        print(this_vehicle.odometer)
         update_me = VehicleMaint.objects.get(id = mid)
         update_me.event_date = postData['event_date']
         update_me.odometer = postData['odometer']
@@ -255,6 +303,9 @@ class VehicleMaintManager(models.Manager):
         update_me.save()
         if int(this_vehicle.odometer) < int(postData['odometer']):
             this_vehicle.odometer = int(postData['odometer'])
+            this_vehicle.save()
+        if postData['is_oilchg'] == 'True' and (this_vehicle.lastoilchg == None or int(this_vehicle.lastoilchg) <= int(postData['odometer'])):
+            this_vehicle.lastoilchg = int(postData['odometer'])
             this_vehicle.save()
         return True
 

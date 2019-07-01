@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponse, redirect
 from django.contrib import messages #for messages
 from .models import * #For adding in models, * captures all
+import decimal
 
 def index(request):
     return render(request, 'recordtracker/index.html')
@@ -27,11 +28,20 @@ def create(request):
 
 def show(request, vic):
     this_vehicle = VehicleStats.objects.get(id = vic)
-    mpg_nums = VehicleStats.objects.fuel_numbers(this_vehicle)
-    print(mpg_nums)
+    VehicleStats.objects.fuel_numbers(this_vehicle)
+    mpg_nums = VehicleStats.objects.fuel_numbers_10(this_vehicle)
+    diff_from_life = {
+        'h_diff': decimal.Decimal(mpg_nums['store_h']) - decimal.Decimal(this_vehicle.hwy_mpg),
+        'c_diff': decimal.Decimal(mpg_nums['store_c']) - decimal.Decimal(this_vehicle.city_mpg),
+        'o_diff': decimal.Decimal(mpg_nums['store_o']) - decimal.Decimal(this_vehicle.off_mpg),
+        'cb_diff': decimal.Decimal(mpg_nums['store_cb']) - decimal.Decimal(this_vehicle.combine_mpg),
+    }
+    miles_to_oilchg = this_vehicle.lastoilchg + 10000 - this_vehicle.odometer
     content = {
         'vehicle' : this_vehicle,
-        'mpg_nums' : mpg_nums
+        'mpg_nums' : mpg_nums,
+        'miles_to_oilchg': miles_to_oilchg,
+        'diff_from_life': diff_from_life
     }
     return render(request, 'recordtracker/vehicle.html', content)
 

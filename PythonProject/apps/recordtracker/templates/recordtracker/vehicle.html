@@ -29,15 +29,16 @@
                     of visual spacing relative to content size. Don't hate.-->
 
 
-        <main class="col-md-10">
-            <div class="col-md-12">
-                <h5 class="col-md-3" style="display: inline">{{vehicle.model}}</h5>
-                <a href="/vehicles/{{vehicle.id}}/edit" class="btn btn-warning col-md-2 offset-md-1">Edit</a>
-                <a href="/vehicles/{{vehicle.id}}/fuel" class="btn btn-warning col-md-2 offset-md-1">Fuel</a>
-                <a href="/vehicles/{{vehicle.id}}/maint" class="btn btn-warning col-md-2 offset-md-1">Maint</a>
+        <main>
+            <div class="row">
+                <h5 class="col col-md-2" style="display: inline">{{vehicle.model}}</h5>
+                <a href="/vehicles/{{vehicle.id}}/edit" class="btn btn-warning col col-md-2 offset-md-1">Edit</a>
+                <a href="/vehicles/{{vehicle.id}}/fuel" class="btn btn-warning col col-md-2 offset-md-1">Fuel</a>
+                <a href="/vehicles/{{vehicle.id}}/maint" class="btn btn-warning col col-md-2 offset-md-1">Maint</a>
             </div>
-            <div class="col-md-11 tripbox">
-                <div class="col-md-6">
+            <div class="row col-md-11 tripbox">
+                <div class="col col-md-6 sidebyside">
+                    <br>
                     <p>Make: {{vehicle.make}}</p>
                     <p>Year: {{vehicle.year}}</p>
                     <p>Current Odometer: {{vehicle.odometer}}</p>
@@ -51,24 +52,43 @@
                     <p>Tires: {{vehicle.tires}}</p>
                     <p>Notes: {{vehicle.notes}}</p>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 sidebyside">
+                    <br>
                     <table class="table table-bordered table-hover table-dark col-md-11">
                         <thead>
                             <th scope='col'>Fuel Economy</th>
-                            <th scope=""></th>
+                            <th scope='col'>Last 10</th>
+                            <th scope='col'>+/- Vs Avg</th>
                         </thead>
                         <tbody>
-                            {% for vehicle in vehicle_list %}
                                 <tr>
-                                    <td><a href="/vehicles/{{vehicle.id}}">{{vehicle.model}}</a></td>
-                                    <td>{{vehicle.make}}</td>
-                                    <td>{{vehicle.year}}</td>
-                                    <td>{{vehicle.odometer}}</td>
-                                    <td>{{vehicle.hwy_mpg}}/{{vehicle.city_mpg}}/{{vehicle.off_mpg}}/{{vehicle.combine_mpg}}</td>
-                                    <td><a href="/vehicles/{{vehicle.id}}/fuel">Review Fuel Entries</a> | <a href="/vehicles/{{vehicle.id}}/maint">Review Maintenance Entries</a></td>
+                                    <td>HWY</td>
+                                    <td>{{mpg_nums.store_h}}</td>
+                                    <td>{{diff_from_life.h_diff}}</td>
                                 </tr>
-                            {% endfor %}
+                                <tr>
+                                    <td>CITY</td>
+                                    <td>{{mpg_nums.store_c}}</td>
+                                    <td>{{diff_from_life.c_diff}}</td>
+                                </tr>
+                                <tr>
+                                    <td>OFFROAD</td>
+                                    <td>{{mpg_nums.store_o}}</td>
+                                    <td>{{diff_from_life.o_diff}}</td>
+                                </tr>
+                                <tr>
+                                    <td>COMBINED</td>
+                                    <td>{{mpg_nums.store_cb}}</td>
+                                    <td>{{diff_from_life.cb_diff}}</td>
+                                </tr>
                         </tbody>
+                    </table>
+                    <table class="table table-bordered table-hover table-dark col-md-11">
+                        <thead>
+                            <th scope='col'>Miles to Next Oil Chg</th>
+                            <th scope='col'>{{ miles_to_oilchg }}</th>
+                        </thead>
+                    </table>
                 </div>
 
             </div>
