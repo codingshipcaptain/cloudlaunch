@@ -23,4 +23,6 @@ urlpatterns = [
     url(r'^vehicles/(?P<vic>\d+)/maint/(?P<mid>\d+)/edit$', views.edit_maint),
     url(r'^vehicles/(?P<vic>\d+)/maint/(?P<mid>\d+)/update$', views.update_maint),
     url(r'^vehicles/(?P<vic>\d+)/maint/(?P<mid>\d+)/delete$', views.delete_maint),
+    url(r'^vehicles/(?P<vic>\d+)/maint/search$', views.search_maint),
+    url(r'^vehicles/(?P<vic>\d+)/maint/result/(?P<search>\w)$', views.search_result),
 ]
