@@ -316,6 +316,12 @@ class VehicleMaintManager(models.Manager):
         return True
 
 
+    def search_maint(self, vic, terms):
+        search_me = VehicleMaint.objects.filter(vehicle = vic, maint__contains = terms)
+        return search_me
+
+
+
 class VehicleMaint(models.Model):
     event_date = models.DateField()
     odometer = models.IntegerField()

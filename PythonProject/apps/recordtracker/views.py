@@ -160,11 +160,11 @@ def delete_maint(request, vic, mid):
     return redirect('/vehicles/'+str(this_vehicle.id)+'/maint')
 
 def search_maint(request, vic):
-    return redirect(('/vehicles/'+str(vic)+'/maint/result/' + str(request.POST['search']))
+    return redirect('/vehicles/'+str(vic)+'/maint/result/' + str(request.POST['search']))
 
 def search_result(request, vic, search):
     this_vehicle = VehicleStats.objects.get(id = vic)
-    maint = VehicleMaint.objects.filter(vehicle = this_vehicle, maint = search).order_by('-odometer')
+    maint = VehicleMaint.objects.search_maint(this_vehicle, search).order_by('-odometer')
     content = {
         'maint' : maint,
         'vehicle' : this_vehicle

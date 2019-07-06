@@ -29,8 +29,8 @@
         <main>
             <div class="row headline">
                 <h4>Maintenance Log of {{vehicle.model}}</h4>
-                <p> <form class="col offset-md-1" action="/vehicles/{{vehicle.id}}/maint/search" method="post">
-                    <input type="text" name="search" placeholder="search"><input type="submit" name="submit" value="">
+                <p> <form class="col offset-md-1" action="/vehicles/{{vehicle.id}}/maint/search" method="post">{% csrf_token %}
+                    <input type="text" name="search" placeholder="search"><input type="submit" name="submit" value="Go"><a class="btn btn-white" href="/vehicles/{{vehicle.id}}/maint">Clear Results</a>
                 </form> </p>
             </div>
 
