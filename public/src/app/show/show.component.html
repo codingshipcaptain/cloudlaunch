@@ -1,0 +1,23 @@
+<h3>Reviews for {{movie.title}}</h3>
+<div class="row">
+    <button class="btn-danger" (click)="deleteMovie()">Delete Movie</button>
+    <button class="btn-primary offset-6" (click)="return()">Back to Movies</button>
+</div>
+
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <th scope='col'>Reviewer</th>
+        <th scope='col'>Rating</th>
+        <th scope='col'>Review</th>
+        <th scope='col'>Action</th>
+    </thead>
+    <tbody>
+        <tr *ngFor="let review of movie.reviews; let i = index">
+            <td>{{review.name}}</td>
+            <td>{{review.rating}}</td>
+            <td>{{review.ureview}}</td>
+            <td><button (click)="reviewRemoval(i, review)">Remove Review</button></td>
+        </tr>
+    </tbody>
+</table>

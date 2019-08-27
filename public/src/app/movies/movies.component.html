@@ -1,0 +1,24 @@
+<div class="row">
+    <h3 class="col-3">Movie List</h3>
+    <button class="button1 offset-6 col-2" (click)="gotoAdd()">Add a new movie</button>
+</div>
+<br>
+
+<table class="table table-bordered table-hover" *ngIf="allthings">
+    <thead>
+        <th scope='col'>Name</th>
+        <th scope='col'>Avg Rating</th>
+        <th scope='col'>Actions Available</th>
+    </thead>
+    <tbody>
+        <tr *ngFor="let movie of allthings; let i = index">
+            <td>{{movie.title}}</td>
+            <td>{{movie.rating}}</td>
+            <td><button (click)="show(movie)">Read Reviews</button><button (click)="review(movie)">Write Review</button></td>
+        </tr>
+    </tbody>
+</table>
+<br>
+<div *ngIf="showNew">
+    <app-new [things]="allthings" [show]="showNew" (changeShow)="listenShow($event)"></app-new>
+</div>
