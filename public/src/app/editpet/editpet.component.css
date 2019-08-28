@@ -1,0 +1,13 @@
+.box {
+    padding: 10px 30px;
+    border: 1px solid #929292;
+}
+
+#cancel {
+    padding: 5px 10px;
+    margin-left: 15px;
+}
+
+#submit {
+    padding: 5px 10px;
+}

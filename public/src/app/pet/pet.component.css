@@ -1,0 +1,16 @@
+#like {
+    border-radius: 5px;
+    padding: 0 10px;
+    color: white;
+    padding: 5px 10px;
+    background-image: linear-gradient(to top, #405767, #D2E1F7);
+    margin-left: 15px;
+}
+
+#adopt {
+    border-radius: 5px;
+    padding: 0 10px;
+    color: white;
+    padding: 5px 10px;
+    background-image: linear-gradient(to top, #405767, #CDE0CE);
+}

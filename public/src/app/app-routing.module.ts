@@ -1,14 +1,16 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { MoviesComponent } from './movies/movies.component';
-import { ShowComponent } from './show/show.component';
-import { ReviewComponent } from './review/review.component';
+import { ShelterComponent } from './shelter/shelter.component';
+import { NewpetComponent } from './newpet/newpet.component';
+import { PetComponent } from './pet/pet.component';
+import { EditpetComponent } from './editpet/editpet.component';
 
 
 const routes: Routes = [
-    {path: 'movies', component: MoviesComponent},
-    {path: 'movies/:id', component: ShowComponent},
-    {path: 'movies/:id/review', component: ReviewComponent}
+    {path: 'pets', component: ShelterComponent},
+    {path: 'pets/new', component: NewpetComponent},
+    {path: 'pets/:id', component: PetComponent},
+    {path: 'pets/:id/edit', component: EditpetComponent}
 ];
 
 @NgModule({

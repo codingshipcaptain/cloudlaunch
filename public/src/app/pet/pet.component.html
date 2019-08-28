@@ -1,0 +1,23 @@
+<div class="row">
+    <h5>Details about {{pet.name}}</h5>
+    <a class="offset-6" [routerLink]="['/pets']">Home</a>
+</div><br/>
+<div class="row">
+    <p class="offset-1 col-3">Pet type: </p>
+    <p class="col-3">{{pet.type}}</p>
+</div><br/>
+<div class="row">
+    <p class="offset-1 col-3">Description: </p>
+    <p class="col-5">{{pet.description}}</p>
+</div><br/>
+<div class="row">
+    <p class="offset-1 col-3">Skills: </p>
+    <div class="col-6">
+        <p *ngFor="let skill of pet.skills">{{skill}}</p>
+    </div>
+</div><br/>
+<div class="row">
+    <p class="offset-1 col-3">Likes: </p>
+    <p class="col-3">{{pet.likes}}</p>
+</div><br/>
+<button class="offset-3" id="like" [disabled]="clicked" (click)="like(pet)">Like this pet</button><button class="offset-1" id="adopt" (click)="adopt(pet)">Adopt this pet!</button>

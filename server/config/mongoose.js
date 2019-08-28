@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const fs = require('fs');
 
-mongoose.connect('mongodb://localhost/squishy', {useNewUrlParser: true});
+mongoose.connect('mongodb://localhost/exam2', {useNewUrlParser: true});
 
 const modelsPath = __dirname + "/../models";
 

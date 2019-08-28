@@ -6,18 +6,18 @@ import { HttpService } from './http.service';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MoviesComponent } from './movies/movies.component';
-import { NewComponent } from './new/new.component';
-import { ReviewComponent } from './review/review.component';
-import { ShowComponent } from './show/show.component';
+import { ShelterComponent } from './shelter/shelter.component';
+import { NewpetComponent } from './newpet/newpet.component';
+import { PetComponent } from './pet/pet.component';
+import { EditpetComponent } from './editpet/editpet.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MoviesComponent,
-    NewComponent,
-    ReviewComponent,
-    ShowComponent
+    ShelterComponent,
+    NewpetComponent,
+    PetComponent,
+    EditpetComponent
   ],
   imports: [
     BrowserModule,

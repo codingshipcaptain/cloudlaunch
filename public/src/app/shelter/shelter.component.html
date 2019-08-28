@@ -1,0 +1,17 @@
+<h5>These pets are looking for a home!</h5>
+<a [routerLink]="['/pets/new']">Add a pet to the shelter</a><br/>
+<br>
+<table class="table table-bordered table-hover" *ngIf="pets">
+    <thead>
+        <th scope='col'>Name</th>
+        <th scope='col'>Type</th>
+        <th scope='col'>Actions</th>
+    </thead>
+    <tbody>
+        <tr *ngFor="let pet of pets; let i = index">
+            <td>{{pet.name}}</td>
+            <td>{{pet.type}}</td>
+            <td><button id="details" (click)="show(pet)">Details</button><button id="edit" (click)="edit(pet)">Edit</button></td>
+        </tr>
+    </tbody>
+</table>

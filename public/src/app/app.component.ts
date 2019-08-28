@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
 export class AppComponent implements OnInit {
     title = 'PROJECT';
     attribute: any;
@@ -18,6 +19,6 @@ export class AppComponent implements OnInit {
     constructor(private _httpService: HttpService, private _router: Router){};
 
     ngOnInit(){
-        this._router.navigate(['movies']);
+        this._router.navigate(['/pets']);
     }
 }
